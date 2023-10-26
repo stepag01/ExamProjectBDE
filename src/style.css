@@ -4,14 +4,13 @@
 }
 
 .container {
-    background-color: rgb(255, 128, 0);
+    background-color: #ff9225;
     height: 587px;
     width: 100%;
 }
 
 
 .item {
-    background-color: rgb(255, 128, 0);
     height: 250px;
     width: 50%;
     margin: auto;
@@ -33,7 +32,7 @@ h1 {
     height: 43px;
     width: 320px;
     border: 0;
-    padding-left: 10px;
+    padding-left: 6px;
 }
 
 
@@ -54,7 +53,7 @@ h1 {
     height: 43px;
     width: 70px;
     border-radius: 0;
-    background-color: #ff8000;
+    background-color: #ff9225;
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
