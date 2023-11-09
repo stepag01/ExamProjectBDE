@@ -81,11 +81,6 @@ function testme() {
   }
 }
 
-
-
-// make an interface/type that makes sure the text is a string
-
-
 addButton.addEventListener("click", testme);
 
 export type { addItemTodo, TodoList, TodoAction, testme };
