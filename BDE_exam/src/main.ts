@@ -1,11 +1,4 @@
 
-// Definere en Todo-Item Interface
-// interface TodoItem {
-//   id: number;
-//   text: string;
-//   completed: boolean;
-// }
-
 interface addItemTodo {
   type: 'ADD_TODO';
   text: string;
@@ -74,6 +67,9 @@ function testme() {
     deleteButton.style.color = "#black"; // Set the text color
     deleteButton.style.padding = "5px 10px"; // Add some padding for better appearance
     deleteButton.style.cursor = "pointer"; // Change cursor to pointer on hover for better user experience
+    deleteButton.style.border = "none"; // No border
+    deleteButton.style.fontSize = "15px"; // Text size
+    deleteButton.style.fontWeight = "600"; // Font weight
 
 
     // Append the delete button to the todo item
