@@ -1,27 +1,86 @@
-interface TodoList {
-  container: HTMLDivElement;
-  heading: HTMLHeadingElement;
-  todoTextArea: HTMLDivElement;
-  taskInput: HTMLInputElement;
-  addButton: HTMLButtonElement;
-  taskList: HTMLUListElement;
+
+interface addItemTodo {
+  type: 'ADD_TODO';
+  text: string;
 }
 
-const todoList: TodoList = {
-  container: document.querySelector(".container") as HTMLDivElement,
-  heading: document.querySelector("h1") as HTMLHeadingElement,
-  todoTextArea: document.querySelector("#todo-text-area") as HTMLDivElement,
-  taskInput: document.querySelector("#task") as HTMLInputElement,
-  addButton: document.querySelector("#btn") as HTMLButtonElement,
-  taskList: document.querySelector("#taskList") as HTMLUListElement,
-};
+// Definere en TodoList type
+type TodoList = addItemTodo[];
+
+// Definere en union type for de mulige actions som kan udføres på Todo listen
+type TodoAction = addItemTodo | ToggleTodoAction;
+
+// Definere en action til at tilføje en ny Todo item
+interface addItemTodo {
+  type: 'ADD_TODO';
+  text: string;
+}
+
+// Definere en action til at toggle den færdige status af en Todo item
+interface ToggleTodoAction {
+  type: 'TOGGLE_TODO';
+  id: number;
+}
+
+const addButton = document.querySelector("#btn") as HTMLButtonElement; // click event
+
+// Update the testme function to add new todo items to the list
+function testme() {
+  const taskInput = document.querySelector("#task") as HTMLInputElement;
+  const text = taskInput.value;
+
+  if (text) {
+    // Create the AddTodoAction based on user input
+    const action: addItemTodo = {
+      type: 'ADD_TODO',
+      text: text,
+    };
+
+    // Dispatch the action (you might not need this depending on your setup)
+    // dispatch(action);
+
+    console.log("test2", action);
+
+    // Reset the input field
+    taskInput.value = "";
+    console.log("todo: " + text);
+
+    // Add the new todo item to the list
+    const todoList = document.querySelector("#taskList") as HTMLUListElement;
+    const newTodoItem = document.createElement("li");
+    newTodoItem.textContent = text;
+    todoList.appendChild(newTodoItem);
 
 
-// Your TypeScript code to add tasks
-const tasksToAdd = ["Task 1", "Task 2", "Task 3"];
+    // Create a delete button for each todo item
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+      // Handle delete button click here
+      // You can remove the todo item from the list or perform any other action
+      todoList.removeChild(newTodoItem);
+    });
 
-tasksToAdd.forEach((taskText) => {
-  const newTask = document.createElement("li");
-  newTask.textContent = taskText;
-  todoList.taskList.appendChild(newTask);
-});
+   
+    // Apply styles directly using the style property
+    deleteButton.style.backgroundColor = "#ff8800"; // Set the background color
+    deleteButton.style.color = "#black"; // Set the text color
+    deleteButton.style.padding = "5px 10px"; // Add some padding for better appearance
+    deleteButton.style.cursor = "pointer"; // Change cursor to pointer on hover for better user experience
+    deleteButton.style.border = "none"; // No border
+    deleteButton.style.fontSize = "15px"; // Text size
+    deleteButton.style.fontWeight = "600"; // Font weight
+
+
+    // Append the delete button to the todo item
+    newTodoItem.appendChild(deleteButton);
+
+    // Append the new todo item to the list
+    todoList.appendChild(newTodoItem);
+
+  }
+}
+
+addButton.addEventListener("click", testme);
+
+export type { addItemTodo, TodoList, TodoAction, testme };

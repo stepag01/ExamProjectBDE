@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="src/style.css">
   </head>
   <body>
-    <!-- <div id="app"></div> -->
-    
     <div class="container">
-      <h1>TODO LIST</h1>
+      <h1>Todo List</h1>
       <div id="todo-text-area">
-          <input type="text" id="task" placeholder="Add a new task here...">
-          <button id="btn">Add</button>
+          <input type="text" id="task" placeholder="Enter a new task">
+          <button @click="testme()" id="btn">Add</button>
       </div>
       <ul id="taskList">
+          <!-- Todo items will be added here dynamically -->
       </ul>
     </div>
 
-    <script type="module" src="/src/main.js"></script>
+    <script src="src/main.ts"></script>
+    
   </body>
 </html>
