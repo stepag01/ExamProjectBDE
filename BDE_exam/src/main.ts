@@ -1,19 +1,24 @@
 
 // Definere en Todo-Item Interface
-interface TodoItem {
-  id: number;
+// interface TodoItem {
+//   id: number;
+//   text: string;
+//   completed: boolean;
+// }
+
+interface addItemTodo {
+  type: 'ADD_TODO';
   text: string;
-  completed: boolean;
 }
 
 // Definere en TodoList type
-type TodoList = TodoItem[];
+type TodoList = addItemTodo[];
 
 // Definere en union type for de mulige actions som kan udføres på Todo listen
-type TodoAction = AddTodoAction | ToggleTodoAction;
+type TodoAction = addItemTodo | ToggleTodoAction;
 
 // Definere en action til at tilføje en ny Todo item
-interface AddTodoAction {
+interface addItemTodo {
   type: 'ADD_TODO';
   text: string;
 }
@@ -24,8 +29,6 @@ interface ToggleTodoAction {
   id: number;
 }
 
-
-
 const addButton = document.querySelector("#btn") as HTMLButtonElement; // click event
 
 // Update the testme function to add new todo items to the list
@@ -35,7 +38,7 @@ function testme() {
 
   if (text) {
     // Create the AddTodoAction based on user input
-    const action: AddTodoAction = {
+    const action: addItemTodo = {
       type: 'ADD_TODO',
       text: text,
     };
@@ -54,12 +57,39 @@ function testme() {
     const newTodoItem = document.createElement("li");
     newTodoItem.textContent = text;
     todoList.appendChild(newTodoItem);
+
+
+    // Create a delete button for each todo item
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+      // Handle delete button click here
+      // You can remove the todo item from the list or perform any other action
+      todoList.removeChild(newTodoItem);
+    });
+
+   
+    // Apply styles directly using the style property
+    deleteButton.style.backgroundColor = "#ff8800"; // Set the background color
+    deleteButton.style.color = "#black"; // Set the text color
+    deleteButton.style.padding = "5px 10px"; // Add some padding for better appearance
+    deleteButton.style.cursor = "pointer"; // Change cursor to pointer on hover for better user experience
+
+
+    // Append the delete button to the todo item
+    newTodoItem.appendChild(deleteButton);
+
+    // Append the new todo item to the list
+    todoList.appendChild(newTodoItem);
+
   }
 }
+
+
 
 // make an interface/type that makes sure the text is a string
 
 
 addButton.addEventListener("click", testme);
 
-export type { TodoItem, TodoList, TodoAction, testme };
+export type { addItemTodo, TodoList, TodoAction, testme };
