@@ -5,22 +5,22 @@ fixture`Todolist test 1`
     .page("./index.html");
 
 test("Add task", async t => {
-    await t
     //Pre-assertion
-        .expect(Selector("#taskList li").count).eql(0)
+    await t.expect(Selector("#taskList li").count).eql(0);
 
+    // Arrange
+    const taskInput = Selector('#task');
+    const addButton = Selector('#btn');
+    const newTask = 'Call mom';
+
+    // Act
+    await t.typeText(taskInput, newTask);
+    await t.click(addButton);
+
+    // Assert
     await t
-    //Arrange
-        .typeText(Selector("#task"), "Call mom")
-    
-    await t
-    //Act
-        .click("#btn")
-
-
-    //Assert (That there is 1 element with the class #taskList)
-    const todoItemCount = await Selector('#taskList').count;
-    assert.equal(todoItemCount, 1 , 'Expected 1 element with class #taskList');
+    const todoItemCount = await Selector("#taskList").count;
+    assert.equal(todoItemCount, 1, 'Expected 1 element with class #taskList');
 });
 
 
@@ -30,20 +30,26 @@ fixture`Todolist test 2`
     .page("./index.html");
 
 test("Add another task and delete the old", async t => {
-    await t
     // Pre-assertion
+    await t
     .expect(Selector("#taskList").count).eql(1)
-    
+   
     // Arrange
-    .typeText(Selector("#task"), "Write in journal")
-    .click("#btn");
-
+    const taskInput = Selector('#task');
+    const addButton = Selector('#btn');
+    const newTask = 'Write in journal';
 
     // Act
-    const deleteButton = Selector("#taskList li button");
-    await t.click("button");
+    await t.typeText(taskInput, newTask);
+    await t.click(addButton);
 
-    // Assert (Check the count of individual list items)
-    const todoItemCount = await Selector("#taskList").count;
-    assert.equal(todoItemCount, 1, 'Expected 1 element with class #taskList');
+    const deleteButton = Selector('.deleteButton');
+    await t.click(deleteButton);
+
+    // Assert
+    const taskList = Selector('#taskList');
+    const addedTask = taskList.find('li').withText(newTask);
+
+    const todoItemCount = await taskList.count;
+    await t.expect(todoItemCount).eql(1, 'Expected 1 element with class #taskList');
 });
