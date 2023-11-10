@@ -1,83 +1,65 @@
 
-interface addItemTodo {
-  type: 'ADD_TODO';
+interface addItemTodo {      // Interface addItemTodo, properties -> tilføje ny todo item, skal være en string 
+  type: 'ADD_TODO';          
   text: string;
 }
+ 
+type TodoList = addItemTodo[];     // Definerer en type (TodoList)
 
-// Definere en TodoList type
-type TodoList = addItemTodo[];
+type TodoAction = addItemTodo | ToggleTodoAction;   // Union type, mulige de actions som kan udføres på Todo listen.
 
-// Definere en union type for de mulige actions som kan udføres på Todo listen
-type TodoAction = addItemTodo | ToggleTodoAction;
-
-// Definere en action til at tilføje en ny Todo item
-interface addItemTodo {
-  type: 'ADD_TODO';
-  text: string;
-}
-
-// Definere en action til at toggle den færdige status af en Todo item
-interface ToggleTodoAction {
+interface ToggleTodoAction {   // Definerer action, toggle den færdige status (Todo item)
   type: 'TOGGLE_TODO';
   id: number;
 }
 
-const addButton = document.querySelector("#btn") as HTMLButtonElement; // click event
+const addButton = document.querySelector("#btn") as HTMLButtonElement; 
 
-// Update the testme function to add new todo items to the list
-function testme() {
+ 
+function testme() {      //Funktion -> Henter aktuel værdi af HTML-input-element (id'et "task") ->og gemmer i variabel "text".
   const taskInput = document.querySelector("#task") as HTMLInputElement;
   const text = taskInput.value;
-
-  if (text) {
-    // Create the AddTodoAction based on user input
-    const action: addItemTodo = {
-      type: 'ADD_TODO',
-      text: text,
+  if (text) {                         //If-statement -> Check variabel text = true
+    const action: addItemTodo = {     //Objekt - Type property + text
+      type: 'ADD_TODO',               //Intention -> tilføje en ny item med specifik text indhold.
+      text: text,                     
     };
-
-    // Dispatch the action (you might not need this depending on your setup)
-    // dispatch(action);
-
     console.log("test2", action);
 
-    // Reset the input field
-    taskInput.value = "";
+ 
+    taskInput.value = "";             // Reset'er input feltet
     console.log("todo: " + text);
 
-    // Add the new todo item to the list
+
     const todoList = document.querySelector("#taskList") as HTMLUListElement;
+    
+    
     const newTodoItem = document.createElement("li");
     newTodoItem.textContent = text;
     todoList.appendChild(newTodoItem);
 
 
-    // Create a delete button for each todo item
-    const deleteButton = document.createElement("button");
+    
+    const deleteButton = document.createElement("button");   // Slet-knap til hver todo-item. 
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", () => {
-      // Handle delete button click here
-      // You can remove the todo item from the list or perform any other action
       todoList.removeChild(newTodoItem);
     });
 
    
-    // Apply styles directly using the style property
-    deleteButton.style.backgroundColor = "#ff8800"; // Set the background color
-    deleteButton.style.color = "#black"; // Set the text color
-    deleteButton.style.padding = "5px 10px"; // Add some padding for better appearance
-    deleteButton.style.cursor = "pointer"; // Change cursor to pointer on hover for better user experience
-    deleteButton.style.border = "none"; // No border
-    deleteButton.style.fontSize = "15px"; // Text size
-    deleteButton.style.fontWeight = "600"; // Font weight
+ 
+    deleteButton.style.backgroundColor = "#ff8800";      // Direkte styling af delete-knappen
+    deleteButton.style.color = "#black"; 
+    deleteButton.style.padding = "5px 10px";
+    deleteButton.style.cursor = "pointer"; 
+    deleteButton.style.border = "none"; 
+    deleteButton.style.fontSize = "15px"; 
+    deleteButton.style.fontWeight = "600"; 
 
 
-    // Append the delete button to the todo item
-    newTodoItem.appendChild(deleteButton);
+    newTodoItem.appendChild(deleteButton);   // Tilføjelse af delete-knap til todo item
 
-    // Append the new todo item to the list
-    todoList.appendChild(newTodoItem);
-
+    todoList.appendChild(newTodoItem);       // Tilføjelse af ny todo item til listen 
   }
 }
 
